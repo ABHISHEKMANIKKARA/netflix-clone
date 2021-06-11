@@ -14,12 +14,11 @@ function changeBanner(){
     //console.log(movie+"is")
        var i=this
         setInterval(() => {
-            console.log(i.totalBanner)
+            //console.log(i.totalBanner)
             
             setVal((val)=>  
                 val+1)
                // console.log(val)
-               setBanner((totalBanner)=>totalBanner+1) 
         }, 5000);
     
     
@@ -28,8 +27,8 @@ function changeBanner(){
 useEffect(() => {
     //var totalBanner=0
     axios.get(`/trending/all/week?api_key=${api_key}&language=en-US`).then((response)=>{
-        setMovie(response.data.results)
-        setBanner(response.data.results.length)
+        setMovie([response.data.results,response.data.results.length])
+        //setBanner(response.data.results.length)
     })
     //console.log(totalBanner)
     changeBanner()
@@ -40,18 +39,17 @@ useEffect(() => {
 
     return (
         <div>
-        <div style={{backgroundImage:`url(${movie?"https://image.tmdb.org/t/p/original"+movie[val].backdrop_path:""})`}} className="banner">
+        <div style={{backgroundImage:`url(${movie?"https://image.tmdb.org/t/p/original"+movie[0][val%movie[1]].backdrop_path:""})`}} className="banner">
             <div className="content">
-            <h1 className="title">{movie?movie[val].title:""}</h1>
+            <h1 className="title">{movie?movie[0][val%movie[1]].title:""}</h1>
             <div className="banner_buttons">
                 <button className="buttons">Play</button>
                 <button className="buttons">My List</button>
             </div>
-             <h3 className="description">{movie?movie[val].overview:""}</h3>
+             <h3 className="description">{movie?movie[0][val%movie[1]].overview:""}</h3>
             </div>
         <div className="fade"></div>
         </div>
-        <h1>{totalBanner}</h1>
         </div>
     )
 }

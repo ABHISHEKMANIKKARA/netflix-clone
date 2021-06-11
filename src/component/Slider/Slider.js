@@ -38,7 +38,7 @@ function Slider(props) {
     }
     return (
         <div className="row">
-            <h2 className="title">{props.isSmall?"Action":"Netflix Originals"}</h2>
+            <h2 className="title">{props.title}</h2>
             <div className="posters">
                 {
                 original.map((obj)=>{
